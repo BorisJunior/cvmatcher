@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Matching - Résultats</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='result.css') }}">
+</head>
+<body>
+  <div class="background">
+      <div class="floating-emoji">📄</div>
+      <div class="floating-emoji">💼</div>
+      <div class="floating-emoji">🎯</div>
+      <div class="floating-emoji">🔍</div>
+      <div class="floating-emoji">📊</div>
+      <div class="floating-emoji">💫</div>
+      <div class="floating-emoji">🌟</div>
+      <div class="floating-emoji">📈</div>
+  </div>
+
+  <div class="container">
+      <!-- Titre principal -->
+      <header class="page-header">
+          <h1>Résultats de l'analyse</h1>
+      </header>
+
+      <!-- Card pour l'info du poste et du domaine -->
+      <div class="job-info-card">
+          <p class="job-info">
+              Poste: <span id="job_title">{{ jd_json.get('Titre_Poste', 'Non disponible') }}</span> <br>
+              Domaine: <span id="job_domain">{{ jd_json.get('Domaine', 'Non disponible') }}</span>
+          </p>
+      </div>
+
+      <div class="results-grid">
+          <!-- Cards des candidats -->
+          <div class="candidate-card" onclick="showDetails(this)">
+            <div class="candidate-card-header">
+                <!-- Avatar -->
+                <div class="candidate-avatar">
+                    <span class="icon">🧑🏽‍💼</span>
+                </div>
+    
+                <!-- Nom, rôle -->
+                <div class="candidate-main-info">
+                    
+                    <h2 class="candidate-name">KOULEVO Boris</h2> <!-- TO DO : A Dynamiser -->
+                    <div class="candidate-role">
+                        <span>{{ cv_json.get('Titre_CV', 'Non disponible') }}</span>
+                    </div>
+                </div>
+    
+                <!-- Score -->
+                <div class="score-badge">9/10</div><!-- Mettre score global -->
+            </div>
+    
+            <!-- Expérience / Éducation -->
+            <div class="candidate-details">
+                <div class="candidate-experience">
+                    <span class="detail-icon">💼</span>
+                    <span class="detail-text">Développeur Python, Société X…</span> <!-- TO DO : A Dynamiser -->
+                </div>
+                <div class="candidate-education">
+                    <span class="detail-icon">🎓</span>
+                    <span class="detail-text">Université de Technologie de Belfort Montbéliard</span> <!-- TO DO : A Dynamiser -->
+                </div>
+            </div>
+    
+            <!-- Compétences -->
+            <div class="skills-tags"> <!-- TO DO : A Dynamiser -->
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">Machine Learning</span>
+                <span class="skill-tag">Deep Learning</span>
+            </div>
+    
+            <!-- Lien de détails -->
+            <div class="candidate-footer">
+                <button class="details-btn">Voir les détails →</button>
+            </div>
+        </div>
+      </div>
+
+      <!-- Modal des détails -->
+      <div class="modal" id="detailsModal">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <div>
+                    <h2>Détails du matching 🎯</h2>
+                     <p>KOULEVO Boris 👨🏽‍💻</p> <!-- TO DO : A Dynamiser -->
+                  </div>
+                  <button class="close-btn" onclick="closeModal()">×</button>
+              </div>
+              
+              <div class="modal-body">
+                  <!-- Formation -->
+                  <div class="criteria-section">
+                      <div class="criteria-header">
+                          <h3>Formation / Éducation</h3>
+                          <div class="rating">
+                              <div class="stars">
+                                  <span class="star-rating" data-rating="{{ scores.get('note_formation', 'Non disponible') }}"></span>
+                              </div>
+                              <span class="score">{{ scores.get('note_formation', 'Non disponible') }}</span>
+                          </div>
+                      </div>
+                      <p class="explanation">{{ scores.get('formation_explication', 'Non disponible') | safe }}</p>
+                  </div>
+
+                  <!-- Expérience -->
+                  <div class="criteria-section">
+                      <div class="criteria-header">
+                          <h3>Expérience Professionnelle</h3>
+                          <div class="rating">
+                              <div class="stars">
+                                  <span class="star-rating" data-rating="{{ scores.get('note_xp_professionnelles', 'Non disponible') }}"></span>
+                              </div>
+                              <span class="score">{{ scores.get('note_xp_professionnelles', 'Non disponible') }}</span>
+                          </div>
+                      </div>
+                      <p class="explanation">{{ scores.get('xp_professionnelles_explication', 'Non disponible') | safe }}</p>
+                  </div>
+
+                  <!-- Hard Skills -->
+                  <div class="criteria-section">
+                      <div class="criteria-header">
+                          <h3>Hard Skills</h3>
+                          <div class="rating">
+                              <div class="stars">
+                                  <span class="star-rating" data-rating="{{ scores.get('note_hard_skills', 'Non disponible') }}"></span>
+                              </div>
+                              <span class="score">{{ scores.get('note_hard_skills', 'Non disponible') }}</span>
+                          </div>
+                      </div>
+                      <p class="explanation">{{ scores.get('hard_skills_explication', 'Non disponible') | safe }}</p>
+                  </div>
+
+                  <!-- Soft Skills -->
+                  <div class="criteria-section">
+                      <div class="criteria-header">
+                          <h3>Soft Skills</h3>
+                          <div class="rating">
+                              <div class="stars">
+                                  <span class="star-rating" data-rating="{{ scores.get('note_soft_skills', 'Non disponible') }}"></span>
+                              </div>
+                              <span class="score">{{ scores.get('note_soft_skills', 'Non disponible') }}</span>
+                          </div>
+                      </div>
+                      <p class="explanation">{{ scores.get('soft_skills_explication', 'Non disponible') | safe }}</p>
+                  </div>
+
+                  <!-- Langues -->
+                  <div class="criteria-section">
+                      <div class="criteria-header">
+                          <h3>Langues</h3>
+                          <div class="rating">
+                              <div class="stars">
+                                  <span class="star-rating" data-rating="{{ scores.get('note_langues', 'Non disponible') }}"></span>
+                              </div>
+                              <span class="score">{{ scores.get('note_langues', 'Non disponible') }}</span>
+                          </div>
+                      </div>
+                      <p class="explanation">{{ scores.get('langues_explication', 'Non disponible') | safe }}</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script>
+      // Fonction pour afficher le modal
+      function showDetails(card) {
+          document.getElementById('detailsModal').classList.add('show');
+          document.body.style.overflow = 'hidden';
+      }
+
+      // Fonction pour fermer le modal
+      function closeModal() {
+          document.getElementById('detailsModal').classList.remove('show');
+          document.body.style.overflow = 'auto';
+      }
+
+      // Fermer le modal en cliquant en dehors
+      window.onclick = function(event) {
+          const modal = document.getElementById('detailsModal');
+          if (event.target === modal) {
+              closeModal();
+          }
+      }
+
+      // Initialiser les étoiles de notation
+      document.querySelectorAll('.star-rating').forEach(rating => {
+          const score = parseFloat(rating.dataset.rating);
+          const stars = '★'.repeat(Math.floor(score)) + '☆'.repeat(10 - Math.floor(score));
+          rating.textContent = stars;
+      });
+  </script>
+</body>
+</html>

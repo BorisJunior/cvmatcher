@@ -1,0 +1,109 @@
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Matching - Chargement</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='loading-style.css') }}">
+</head>
+<body>
+    <div class="background">
+        <div class="floating-emoji">📄</div>
+        <div class="floating-emoji">💼</div>
+        <div class="floating-emoji">🎯</div>
+        <div class="floating-emoji">🔍</div>
+        <div class="floating-emoji">📊</div>
+        <div class="floating-emoji">💫</div>
+        <div class="floating-emoji">🌟</div>
+        <div class="floating-emoji">📈</div>
+    </div>
+
+    <div class="container">
+        <div class="loading-card">
+            <div class="step-item" data-step="0">
+                <span class="emoji">📄</span>
+                <div class="step-icon">
+                    <svg class="progress-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                    </svg>
+                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 6L9 17l-5-5"/>
+                    </svg>
+                </div>
+                <div class="step-content">
+                    <h3>Extraction des données du CV</h3>
+                    <p>Analyse du document en cours...</p>
+                </div>
+            </div>
+
+            <div class="step-item" data-step="1">
+                <span class="emoji">🤖</span>
+                <div class="step-icon">
+                    <svg class="progress-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                    </svg>
+                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 6L9 17l-5-5"/>
+                    </svg>
+                </div>
+                <div class="step-content">
+                    <h3>Structuration des données avec notre IA</h3>
+                    <p>Traitement intelligent des informations...</p>
+                </div>
+            </div>
+
+            <div class="step-item" data-step="2">
+                <span class="emoji">📊</span>
+                <div class="step-icon">
+                    <svg class="progress-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                    </svg>
+                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 6L9 17l-5-5"/>
+                    </svg>
+                </div>
+                <div class="step-content">
+                    <h3>Calcul des scores de correspondance</h3>
+                    <p>Évaluation finale en cours...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function updateProgress() {
+            try {
+                const response = await fetch('/progress');
+                const data = await response.json();
+                
+                const steps = document.querySelectorAll('.step-item');
+                const currentStep = Math.floor(data.progress / 33.33); // 3 étapes, donc 100/3
+
+                steps.forEach((step, index) => {
+                    if (index < currentStep) {
+                        step.classList.remove('active');
+                        step.classList.add('completed');
+                    } else if (index === currentStep) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else {
+                        step.classList.remove('active', 'completed');
+                    }
+                });
+
+                if (data.progress === 100) {
+                    setTimeout(() => {
+                        window.location.href = '/result';
+                    }, 3000);
+                } else {
+                    setTimeout(updateProgress, 500);
+                }
+            } catch (error) {
+                console.error('Erreur lors de la mise à jour de la progression:', error);
+                setTimeout(updateProgress, 1000);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', updateProgress);
+    </script>
+</body>
+</html>

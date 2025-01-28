@@ -1,0 +1,375 @@
+/* Reset et styles de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+    color: #1a1a1a;
+    position: relative;
+}
+
+/* Background avec dégradé et emojis flottants */
+.background {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #c2d6f0, #e0e0e0, #ffe7e7);
+    z-index: -1;
+    overflow: hidden;
+}
+
+.floating-emoji {
+    position: absolute;
+    font-size: 48px; /* Augmenter la taille des émojis */
+    opacity: 0.05; /* Réduire l'opacité pour un effet plus léger */
+    animation: float 15s linear infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0.3;
+    }
+    10% {
+        opacity: 0.3;
+    }
+    90% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0.3;
+    }
+}
+
+/* Positionnement aléatoire des emojis */
+.floating-emoji:nth-child(1) { left: 10%; animation-delay: 0s; }
+.floating-emoji:nth-child(2) { left: 25%; animation-delay: 2s; }
+.floating-emoji:nth-child(3) { left: 40%; animation-delay: 4s; }
+.floating-emoji:nth-child(4) { left: 55%; animation-delay: 6s; }
+.floating-emoji:nth-child(5) { left: 70%; animation-delay: 8s; }
+.floating-emoji:nth-child(6) { left: 85%; animation-delay: 10s; }
+.floating-emoji:nth-child(7) { left: 95%; animation-delay: 12s; }
+.floating-emoji:nth-child(8) { left: 15%; animation-delay: 14s; }
+
+/* Container principal */
+.container {
+    min-height: 100vh;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* En-tête de la page */
+.page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.page-header h1 {
+    color: #4F46E5;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Card pour le job info */
+.job-info-card {
+    background-color: #fff;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 0 auto 3rem auto; /* Centré horizontalement */
+    text-align: left;         /* Alignement à gauche */
+}
+
+.job-info {
+    color: #6B7280;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    font-style: italic;
+    font-weight: 500;
+}
+
+/* Grille des résultats */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* ========== NOUVEAU STYLE DU CARD CANDIDAT ========== */
+.candidate-card {
+background-color: #fff;
+border-radius: 1rem;
+padding: 1rem 1.5rem;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+width: 100%;
+/* max-width: 320px; // Décommenter si vous voulez une largeur fixe */
+cursor: pointer;
+transition: transform 0.2s ease, box-shadow 0.2s ease;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}
+
+.candidate-card:hover {
+transform: translateY(-4px);
+box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Header du card (avatar, nom, score) */
+.candidate-card-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 1rem;
+}
+
+.candidate-avatar {
+background-color: #f0f0f5;
+border-radius: 0.75rem;
+width: 48px;
+height: 48px;
+display: flex;
+align-items: center;
+justify-content: center;
+margin-right: 0.75rem;
+}
+
+.candidate-avatar .icon {
+font-size: 4rem;
+}
+
+/* Bloc nom + role */
+.candidate-main-info {
+flex: 1;
+display: flex;
+flex-direction: column;
+gap: 0.25rem;
+margin: 0 1rem;
+}
+
+.candidate-name {
+font-size: 1.1rem;
+font-weight: 600;
+margin: 0;
+color: #111827;
+}
+
+.candidate-role {
+font-size: 0.9rem;
+color: #4F46E5;
+}
+
+.score-badge {
+background: linear-gradient(135deg, #6D28D9, #6366F1);
+color: #fff;
+padding: 0.4rem 0.8rem;
+border-radius: 0.5rem;
+font-size: 1.3rem;
+font-weight: 600;
+white-space: nowrap;
+}
+
+/* Partie expérience/éducation */
+.candidate-details {
+display: flex;
+flex-direction: column;
+gap: 0.5rem;
+margin-bottom: 1rem;
+}
+
+.candidate-experience, .candidate-education {
+display: flex;
+align-items: center;
+font-size: 0.9rem;
+color: #000000;
+}
+
+.detail-icon {
+margin-right: 0.5rem;
+font-size: 1.4rem;
+}
+
+.detail-text {
+/* style supplémentaire si besoin */
+}
+
+/* Compétences */
+.skills-tags {
+display: flex;
+flex-wrap: wrap;
+gap: 0.5rem;
+margin-bottom: 1rem;
+}
+
+.skill-tag {
+background: #4648a3;
+color: #ffffff;
+padding: 0.3rem 0.75rem;
+border-radius: 1rem;
+font-size: 0.8rem;
+white-space: nowrap;
+}
+
+/* Pied du card */
+.candidate-footer {
+text-align: right;
+}
+
+.details-btn {
+background: none;
+border: none;
+color: #4F46E5;
+cursor: pointer;
+font-size: 0.9rem;
+padding: 0;
+}
+
+.details-btn:hover {
+text-decoration: underline;
+}
+
+/* ========== MODAL ========== */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 1rem;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.modal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #E5E7EB;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    color: #4F46E5;
+    font-size: 1.5rem;
+}
+
+.modal-header p {
+    color: rgb(107, 114, 128);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #6B7280;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+/* Sections des critères */
+.criteria-section {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: #EFF6FF; /* Arrière-plan bleu léger */
+}
+
+.criteria-section + .criteria-section {
+    margin-top: 1.5rem;
+}
+
+.criteria-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.criteria-header h3 {
+    color: #111827;
+    font-size: 1.25rem;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stars {
+    color: #FCD34D;
+    font-size: 1.25rem;
+}
+
+.score {
+    color: #6B7280;
+    font-weight: 500;
+}
+
+.explanation {
+    color: #4B5563;
+    line-height: 1.6;
+    white-space: pre-line;
+    padding-left: 1rem;
+    border-left: 3px solid #93C5FD; /* Même couleur bleue, plus soutenue */
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .job-info {
+        font-size: 1rem;
+        
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 1rem;
+    }
+
+    .criteria-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}

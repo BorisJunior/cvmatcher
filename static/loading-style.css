@@ -1,0 +1,204 @@
+/* Reset et styles de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+    color: #1a1a1a;
+    position: relative;
+}
+
+/* Background avec dégradé et emojis flottants */
+.background {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #c2d6f0, #e0e0e0, #ffe7e7);
+    z-index: -1;
+    overflow: hidden;
+}
+
+.floating-emoji {
+    position: absolute;
+    font-size: 48px; /* Augmenter la taille des émojis */
+    opacity: 0.05; /* Réduire l'opacité pour un effet plus léger */
+    animation: float 15s linear infinite;
+  }
+  
+  @keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0.3;
+    }
+    10% {
+        opacity: 0.3;
+    }
+    90% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0.3;
+    }
+}
+
+/* Positionnement aléatoire des emojis */
+.floating-emoji:nth-child(1) { left: 10%; animation-delay: 0s; }
+.floating-emoji:nth-child(2) { left: 25%; animation-delay: 2s; }
+.floating-emoji:nth-child(3) { left: 40%; animation-delay: 4s; }
+.floating-emoji:nth-child(4) { left: 55%; animation-delay: 6s; }
+.floating-emoji:nth-child(5) { left: 70%; animation-delay: 8s; }
+.floating-emoji:nth-child(6) { left: 85%; animation-delay: 10s; }
+.floating-emoji:nth-child(7) { left: 95%; animation-delay: 12s; }
+.floating-emoji:nth-child(8) { left: 15%; animation-delay: 14s; }
+
+/* Container principal */
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+/* Card de chargement */
+.loading-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 32rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Étapes */
+.step-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 1rem;
+    color: #9CA3AF;
+    transition: all 0.3s ease;
+}
+
+.step-item:not(:last-child) {
+    border-bottom: 1px solid #E5E7EB;
+}
+
+/* Emoji */
+.emoji {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+/* Icône de progression */
+.step-icon {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    margin: 0 1rem;
+}
+
+.progress-circle,
+.check-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease;
+}
+
+.progress-circle {
+    animation: spin 2s linear infinite;
+    opacity: 0;
+}
+
+.check-icon {
+    opacity: 0;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Contenu de l'étape */
+.step-content {
+    flex: 1;
+}
+
+.step-content h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    transition: color 0.3s ease;
+}
+
+.step-content p {
+    font-size: 0.875rem;
+    color: #6B7280;
+}
+
+/* États des étapes */
+.step-item.active {
+    color: #4F46E5;
+}
+
+.step-item.active .emoji {
+    opacity: 1;
+}
+
+.step-item.active .progress-circle {
+    opacity: 1;
+    stroke: #4F46E5;
+}
+
+.step-item.active .step-content h3 {
+    color: #4F46E5;
+}
+
+.step-item.completed {
+    color: #059669;
+}
+
+.step-item.completed .emoji {
+    opacity: 1;
+}
+
+.step-item.completed .check-icon {
+    opacity: 1;
+    stroke: #059669;
+}
+
+.step-item.completed .step-content h3 {
+    color: #059669;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .loading-card {
+        padding: 1rem;
+    }
+
+    .step-item {
+        padding: 0.75rem;
+    }
+
+    .emoji {
+        font-size: 1.25rem;
+    }
+
+    .step-content h3 {
+        font-size: 0.875rem;
+    }
+
+    .step-content p {
+        font-size: 0.75rem;
+    }
+}

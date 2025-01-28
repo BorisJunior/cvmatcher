@@ -1,0 +1,32 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{% block title %}Boostez votre recherche d'emploi{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    <div class="app">
+        <!-- Animations de fond -->
+        {% block floating_content %}
+        <div class="background-animations">
+            <div class="floating-emoji">📄</div>
+            <div class="floating-emoji">💼</div>
+            <div class="floating-emoji">🎯</div>
+            <div class="floating-emoji">🚀</div>
+            <div class="floating-emoji">💫</div>
+            <div class="floating-emoji">✨</div>
+        </div>
+        {% endblock %}
+
+        <!-- Conteneur principal -->
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

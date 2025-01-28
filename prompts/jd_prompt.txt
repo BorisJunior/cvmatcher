@@ -1,0 +1,45 @@
+Voici une fiche de poste brute :
+
+{description_poste}
+
+**Tâche** :
+Structure cette fiche de poste en suivant impérativement le format suivant et les délimiteurs. Utilise `##` pour délimiter les sections principales. Extrait pour chaque section toutes les informations disponibles dans la fiche de poste. Si une information n’est pas disponible, mentionne "Non mentionné". Respecte la structure suivante :
+
+## Titre_Poste
+{{Titre exact du poste}}
+
+## Domaine
+{{Indiquer le domaine ou la spécialisation}}
+
+## Missions
+{{Lister les missions et responsabilités en détail.}}
+
+## Hard_Skills
+{{Lister les compétences techniques requises ou valorisées, comme les outils, langages de programmation, frameworks.}}
+
+## Soft_Skills
+{{Lister les qualités ou compétences transversales mentionnées, comme leadership, communication.}}
+
+## Langues
+{{Lister les langues demandées et leur niveau, si mentionné.}}
+
+## Formation
+{{Indiquer le niveau d'études minimum requis}}
+{{Indiquer le domaine ou filière d'études}}
+{{Indiquer les établissements reconnus. Si ce n'est pas indiqué, mettre "non exigé"}}
+
+## Xp_Professionnelles
+{{Indiquer le nombre d'années d'expérience requis, les types de postes ou secteurs d'activité valorisés.}}
+
+## Projets
+{{Lister des projets types ou réalisations exemplaires mentionnées.}}
+
+## Certifications
+{{Lister les certifications ou licences exigées ou valorisées.}}
+
+## Autres
+{{Autres informations}}
+
+Fournis la fiche de poste structurée dans ce format.
+
+*Réponse*:

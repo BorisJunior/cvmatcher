@@ -1,0 +1,50 @@
+Voici un CV brut :
+
+
+**Tâche** :
+Structure ce CV en suivant impérativement le format suivant et les délimiteurs. Au lieu d'utiliser `**`, utilise pluôt `##` pour délimiter les sections principales. Extrait pour chaque section toutes les infos disponibles dans le CV. Si une information n’est pas disponible, mentionne "Non mentionné". Respecte la structure suivante :
+
+## Informations_Personnelles
+{{Lister toutes les informations personnelles}}
+
+## Titre_CV
+{{Le titre ou poste visé}}
+
+## Profil
+{{résumé ou profil}}
+
+## Formation
+{{citer toutes les formations en donnant l'établissement, le niveau, la période, le domaine/la filière}}
+
+## Xp_Professionnelles
+{{citer toutes les expériences professionnelles en détails en donnant le poste, l'entreprise, la période et les missions}}
+
+## Projets
+{{citer tous les projets en détails}}
+
+## Hard_Skills
+{{lister tous les hard skills}}
+
+## Soft_Skills
+{{lister tous les soft skills}}
+
+## Certifications
+{{citer toutes les certifications et licences}}
+
+## Langues
+{{citer toutes les langues en détails}}
+
+## Hobbies
+{{citer toutes les activités extra-professionnelles, bénévolat et intérêts personnels}}
+
+## Autres
+{{Autres informations}}
+
+
+##Json_info
+{{Ajoute à la fin sous format JSON les informatons personnelles du candidat avec les clés name, title, number, link etc...
+}}
+
+Fournis le CV structuré dans ce format.
+
+*Réponse*:

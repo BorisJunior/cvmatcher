@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Matching - Évaluez votre CV</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="background">
+        <div class="floating-emoji">📄</div>
+        <div class="floating-emoji">💼</div>
+        <div class="floating-emoji">🎯</div>
+        <div class="floating-emoji">🔍</div>
+        <div class="floating-emoji">📊</div>
+        <div class="floating-emoji">💫</div>
+        <div class="floating-emoji">🌟</div>
+        <div class="floating-emoji">📈</div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <div class="header">
+                <h1>Évaluez votre CV face à une offre d'emploi</h1>
+                <p>Notre IA analyse votre CV et calcule votre score de correspondance avec le poste de vos rêves</p>
+            </div>
+
+            <form id="matchingForm" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>Votre CV</label>
+                    <div class="file-upload">
+                        <input type="file" id="cvFile" name="cv" />
+                        <div class="upload-content">
+                            <div class="upload-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="17 8 12 3 7 8"/>
+                                    <line x1="12" y1="3" x2="12" y2="15"/>
+                                </svg>
+                            </div>
+                            <p class="upload-text">Glissez votre CV ici ou cliquez pour sélectionner</p>
+                            <p class="upload-hint">Format PDF uniquement</p>
+                        </div>
+                        <div class="file-info" style="display: none;">
+                            <span class="file-name"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="jobDescription">Description du poste</label>
+                    <textarea 
+                        id="jobDescription" 
+                        name="job_description" 
+                        placeholder="Collez ici la description du poste..."
+                    ></textarea>
+                </div>
+
+                <button type="submit" class="submit-button">
+                    Analyser 🚀
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Gestion de l'affichage du nom de fichier
+        document.getElementById('cvFile').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name;
+            const fileInfo = document.querySelector('.file-info');
+            const fileName_el = document.querySelector('.file-name');
+            
+            if (fileName) {
+                fileName_el.textContent = '✓ ' + fileName;
+                fileInfo.style.display = 'block';
+            } else {
+                fileInfo.style.display = 'none';
+            }
+        });
+
+        // Gestion du drag & drop
+        const dropZone = document.querySelector('.file-upload');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            dropZone.classList.add('drag-active');
+        }
+
+        function unhighlight(e) {
+            dropZone.classList.remove('drag-active');
+        }
+
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            const fileInput = document.getElementById('cvFile');
+            
+            if (files[0].type === 'application/pdf') {
+                fileInput.files = files;
+                fileInput.dispatchEvent(new Event('change'));
+            }
+        }
+    </script>
+</body>
+</html>
