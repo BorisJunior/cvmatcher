@@ -128,14 +128,16 @@ def calculate_scores(cv_json, jd_json):
         section, result = calculate_section_score(section)
         score_key = f"note_{section.lower()}"
         explanation_key = f"{section.lower()}_explication"
-        # note_explanation_key = "note_explication"
+        notes_explanation_key = f"note_{section.lower()}_explication"
         
         score = result.get(score_key, "Non disponible")
         explanation = format_explanation(result.get(explanation_key, "Non disponible"))
+        notes = format_explanation(result.get(notes_explanation_key, "Non disponible"))
         
         print(f"{section.lower()} score", score)
+        print(f"{section.lower()} note", notes)
         
-        return {score_key: score, explanation_key: explanation}
+        return {score_key: score, explanation_key: explanation, notes_explanation_key: notes}
     
     def process_sections(sections):
         scores = {}

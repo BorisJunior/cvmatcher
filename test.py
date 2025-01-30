@@ -91,6 +91,9 @@ Fournis la fiche de poste structurée dans ce format.
 
 """
 
+
+
+
 structured_jd = call_deepseek_api(prompt)
 print('jd response done', structured_jd)
 

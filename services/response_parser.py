@@ -9,14 +9,19 @@ def parse_llm_response(response):
         parsed_response = {
             "formation_explication": extract_tag_content(response, "formation_explication"),
             "note_formation": extract_tag_content(response, "note_formation"),
+            "note_formation_explication": extract_tag_content(response, "note_formation_explication"),
             "xp_professionnelles_explication": extract_tag_content(response, "xp_professionnelles_explication"),
             "note_xp_professionnelles": extract_tag_content(response, "note_xp_professionnelles"),
+            "note_xp_professionnelles_explication": extract_tag_content(response, "note_xp_professionnelles_explication"),
             "hard_skills_explication": extract_tag_content(response, "hard_skills_explication"),
             "note_hard_skills": extract_tag_content(response, "note_hard_skills"),
+            "note_hard_skills_explication": extract_tag_content(response, "note_hard_skills_explication"),
             "soft_skills_explication": extract_tag_content(response, "soft_skills_explication"),
             "note_soft_skills": extract_tag_content(response, "note_soft_skills"),
+            "note_soft_skills_explication": extract_tag_content(response, "note_soft_skills_explication"),
             "langues_explication": extract_tag_content(response, "langues_explication"),
             "note_langues": extract_tag_content(response, "note_langues"),
+            "note_langues_explication": extract_tag_content(response, "note_langues_explication"),
         }
         return parsed_response
     except Exception as e:

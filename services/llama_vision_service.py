@@ -15,7 +15,7 @@ def generate_vision_response(prompt: str, image_path: str) -> str:
     - Streamming des résultats
     - Gestion du format de réponse
     """
-    client = Together(api_key=os.getenv("DEEPSEEK_API_KEY"))
+    client = Together(api_key=os.getenv("TOGETHER_AI_API_KEY"))
     
     # Préparation du payload
     messages = [{

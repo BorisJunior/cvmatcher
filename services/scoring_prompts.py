@@ -36,11 +36,11 @@ def generate_formation_prompt(cv_formation, jd_formation, cv_certification):
     L’établissement est reconnu et il dispose d’une certification Scrum Master en rapport direct avec le poste.
     Tout est conforme aux exigences.
     </formation_explication>
-    <note_explication>
+    <note_formation_explication>
     Diplome : 5/5
     Etablissement : 3/3
     Certifications : 2/2
-    </note_explication>
+    </note_formation_explication>
     <note_formation> 10 </note_formation>
 
     **Exemple 2**:
@@ -49,20 +49,20 @@ def generate_formation_prompt(cv_formation, jd_formation, cv_certification):
     Le diplôme n’est pas cohérent avec le domaine ni le niveau requis.
     Aucune certification pertinente n’est mentionnée.
     </formation_explication>
-    <note_explication>
+    <note_formation_explication>
     Diplome : 0/5
     Etablissement : 0/3
     Certifications : 0/2
-    </note_explication>
+    </note_formation_explication>
     <note_formation> 0 </note_formation>
 
     ### Réponse :
     <formation_explication>
     {{développer le raisonnement pour noter la formation selon les règles en étant bref mais précis}}
     </formation_explication>
-    <note_explication>
+    <note_formation_explication>
     {{détaillez la répartition des points : Diplome : x/5, Etablissement : x/3, Certifications : x/2}}
-    </note_explication>
+    </note_formation_explication>
     <note_formation>
     {{mets ici uniquement la note de la formation sur 10, sans détails supplémentaires}}
     </note_formation>
@@ -113,11 +113,11 @@ def generate_experience_prompt(cv_experience, jd_experience):
     l’optimisation d’un modèle de détection d’anomalies ayant réduit les faux positifs de 30 %,
     ainsi que le déploiement d’un pipeline MLOps en production.
     </xp_professionnelles_explication>
-    <note_explication>
+    <note_xp_profesionnelles_explication>
     Expérience : 5/5
     Cohérence : 2/2
     Bonus : 3/3
-    </note_explication>
+    </note_xp_profesionnelles_explication>
     <note_xp_professionnelles> 10 </note_xp_professionnelles>
 
     **Exemple 2 :**
@@ -130,11 +130,11 @@ def generate_experience_prompt(cv_experience, jd_experience):
     par exemple « amélioration des modèles de classification » sans précision sur l’impact
     ou les métriques obtenues.
     </xp_professionnelles_explication>
-    <note_explication>
+    <note_xp_profesionnelles_explication>
     Expérience : 5/5
     Cohérence : 1/2
     Bonus : 2/3
-    </note_explication>
+    </note_xp_profesionnelles_explication>
     <note_xp_professionnelles> 8 </note_xp_professionnelles>
 
     **Exemple 3 :**
@@ -146,11 +146,11 @@ def generate_experience_prompt(cv_experience, jd_experience):
     Le CV présente quelques réalisations pertinentes, comme l’entraînement d’un modèle
     de recommandation utilisé en production, mais manque de détails chiffrés.
     </xp_professionnelles_explication>
-    <note_explication>
+    <note_xp_profesionnelles_explication>
     Expérience : 3/5
     Cohérence : 2/2
     Bonus : 2/3
-    </note_explication>
+    </note_xp_profesionnelles_explication>
     <note_xp_professionnelles> 7 </note_xp_professionnelles>
 
     **Exemple 4 :**
@@ -163,11 +163,11 @@ def generate_experience_prompt(cv_experience, jd_experience):
     Les réalisations mentionnées sont principalement issues de projets personnels ou académiques,
     avec peu d’impact démontré dans un cadre professionnel.
     </xp_professionnelles_explication>
-    <note_explication>
+    <note_xp_profesionnelles_explication>
     Expérience : 2/5
     Cohérence : 0/2
     Bonus : 1/3
-    </note_explication>
+    </note_xp_profesionnelles_explication>
     <note_xp_professionnelles> 3 </note_xp_professionnelles>
 
     **Exemple 5 :**
@@ -178,20 +178,20 @@ def generate_experience_prompt(cv_experience, jd_experience):
     Cependant, les réalisations mentionnées sont trop générales et manquent
     d’exemples concrets d’impact business ou technique, ce qui limite leur valeur.
     </xp_professionnelles_explication>
-    <note_explication>
+    <note_xp_profesionnelles_explication>
     Expérience : 5/5
     Cohérence : 2/2
     Bonus : 1/3
-    </note_explication>
+    </note_xp_profesionnelles_explication>
     <note_xp_professionnelles> 8 </note_xp_professionnelles>
 
     ### Réponse :
     <xp_professionnelles_explication>
     {{développer le raisonnement pour noter les expériences selon les règles en étant bref mais précis}}
     </xp_professionnelles_explication>
-    <note_explication>
+    <note_xp_profesionnelles_explication>
     {{détaillez la répartition des points : Expérience : x/5, Cohérence : x/2, Bonus : x/3}}
-    </note_explication>
+    </note_xp_profesionnelles_explication>
     <note_xp_professionnelles>
     {{mets ici uniquement la note des expériences sur 10, sans détails supplémentaires}}
     </note_xp_professionnelles>
@@ -239,11 +239,11 @@ def generate_hard_skills_prompt(cv_hard_skills, jd_hard_skills, cv_experiences):
     - Docker : ni mentionné ni déductible d'une expérience ; aucune trace de conteneurisation 
       ou déploiement l'impliquant.
     </hard_skills_explication>
-    <note_explication>
+    <note_hard_skills_explication>
     SQL: 10
     JavaScript: 7
     Docker: 0
-    </note_explication>
+    </note_hard_skills_explication>
     <note_hard_skills> 5.6667 </note_hard_skills>
 
     **Exemple 2**:
@@ -256,10 +256,10 @@ def generate_hard_skills_prompt(cv_hard_skills, jd_hard_skills, cv_experiences):
       mentionnant l’utilisation d’AWS. Il a mis en place des pipelines CI/CD sur cette plateforme, 
       prouvant l’usage concret du Cloud.
     </hard_skills_explication>
-    <note_explication>
+    <note_hard_skills_explication>
     Machine Learning: 10
     Cloud Computing: 7
-    </note_explication>
+    </note_hard_skills_explication>
     <note_hard_skills> 8.5 </note_hard_skills>
 
     ### Réponse :
@@ -269,13 +269,13 @@ def generate_hard_skills_prompt(cv_hard_skills, jd_hard_skills, cv_experiences):
     Soyez bref, précis et structuré.}}
     </hard_skills_explication>
 
-    <note_explication>
+    <note_hard_skills_explication>
     {{Indiquez la note de chaque compétence, sans autre commentaire. 
     Ex. : 
     CompétenceA: 10
     CompétenceB: 4
     CompétenceC: 7}}
-    </note_explication>
+    </note_hard_skills_explication>
 
     <note_hard_skills>
     {{Faites la moyenne des notes individuelles, sans arrondir, et retournez seulement cette valeur.}}
@@ -323,10 +323,10 @@ def generate_soft_skills_prompt(cv_soft_skills, jd_soft_skills, cv_experiences):
       (5 personnes) sur un projet inter-service. 
       Utilisation confirmée par la réussite du projet sous sa supervision.
     </soft_skills_explication>
-    <note_explication>
+    <note_soft_skills_explication>
     Communication: 10
     Leadership: 10
-    </note_explication>
+    </note_soft_skills_explication>
     <note_soft_skills> 10 </note_soft_skills>
 
     **Exemple 2**:
@@ -336,10 +336,10 @@ def generate_soft_skills_prompt(cv_soft_skills, jd_soft_skills, cv_experiences):
     - Adaptabilité : ni mentionnée ni déductible, aucune situation professionnelle décrite 
       où il a dû s’adapter à un changement majeur.
     </soft_skills_explication>
-    <note_explication>
+    <note_soft_skills_explication>
     Collaboration: 7
     Adaptabilité: 0
-    </note_explication>
+    </note_soft_skills_explication>
     <note_soft_skills> 3.5 </note_soft_skills>
 
     **Exemple 3**:
@@ -351,10 +351,10 @@ def generate_soft_skills_prompt(cv_soft_skills, jd_soft_skills, cv_experiences):
     - Communication : explicitement mentionnée, mais aucune expérience ne démontre un usage clair 
       (pas de présentation, d’animation d’atelier, etc.).
     </soft_skills_explication>
-    <note_explication>
+    <note_soft_skills_explication>
     Résolution de problèmes: 7
     Communication: 7
-    </note_explication>
+    </note_soft_skills_explication>
     <note_soft_skills> 7 </note_soft_skills>
 
     ### Réponse :
@@ -363,12 +363,12 @@ def generate_soft_skills_prompt(cv_soft_skills, jd_soft_skills, cv_experiences):
     puis précisez si elle est concrètement utilisée dans une ou plusieurs expériences. 
     Restez concis et précis.}}
     </soft_skills_explication>
-    <note_explication>
+    <note_soft_skills_explication>
     {{Indiquez simplement la note pour chaque soft skill, par exemple :
     Communication: 10
     Leadership: 4
     ...}}
-    </note_explication>
+    </note_soft_skills_explication>
     <note_soft_skills>
     {{Faites la moyenne des notes individuelles (sans arrondir) et retournez seulement cette valeur.}}
     </note_soft_skills>
@@ -387,8 +387,9 @@ def generate_languages_prompt(cv_langues, jd_langues):
     - **Langues mentionnées :** {cv_langues}
 
     ### Règles d’évaluation :
-    1. Niveau mentionné (7 ou 4 ou 0 points) :
+    1. Niveau mentionné (7 ou 5 ou 4 ou 0 points) :
        - 7 points : la langue est mentionnée avec un niveau intermédiaire ou plus (B2, C1, C2, "Fluent", etc.).
+       - 5 points : Aucun niveau n'est mentionné.
        - 4 points : la langue est mentionnée avec un niveau inférieur à intermédiaire (A1, A2, "Débutant", etc.).
        - 0 point : la langue n'est pas mentionnée du tout.
     2. Certifications (3 ou 0 points) :
@@ -408,11 +409,11 @@ def generate_languages_prompt(cv_langues, jd_langues):
     Le candidat a indiqué un niveau A2 en espagnol. Il ne possède aucune certification.
     Le français n’est pas mentionné sur le CV.
     </langues_explication>
-    <note_explication>
+    <note_langues_explication>
     Anglais: 7
     Espagnol: 4
     Français: 0
-    </note_explication>
+    </note_langues_explication>
     <note_langues> 3.6667 </note_langues> 
 
     **Exemple 2**:
@@ -420,10 +421,10 @@ def generate_languages_prompt(cv_langues, jd_langues):
     L’allemand est mentionné avec un niveau C2, et le candidat détient un Goethe-Zertifikat C2.
     L’italien est mentionné comme « débutant » sans plus de détails. Aucune certification n’est précisée.
     </langues_explication>
-    <note_explication>
+    <note_langues_explication>
     Allemand: 10
     Italien: 4
-    </note_explication>
+    </note_langues_explication>
     <note_langues> 7 </note_langues>
 
     **Exemple 3**:
@@ -432,10 +433,10 @@ def generate_languages_prompt(cv_langues, jd_langues):
     Le français est mentionné niveau A2, ce qui reste inférieur à B2. 
     Aucune certification n’a été signalée pour ces deux langues.
     </langues_explication>
-    <note_explication>
+    <note_langues_explication>
     Anglais: 7
     Français: 4
-    </note_explication>
+    </note_langues_explication>
     <note_langues> 5.5 </note_langues> 
 
     ### Réponse :
@@ -443,12 +444,12 @@ def generate_languages_prompt(cv_langues, jd_langues):
     {{Pour chaque langue requise, indiquez le niveau mentionné (ou absence). 
     S’il existe une certification, précisez-la avec son niveau. Restez concis.}}
     </langues_explication>
-    <note_explication>
+    <note_langues_explication>
     {{Énumérez la note de chaque langue, par exemple :
     Anglais: 7
     Espagnol: 4
     ...}}
-    </note_explication>
+    </note_langues_explication>
     <note_langues>
     {{Calculez la moyenne des notes individuelles, sans arrondir, et retournez uniquement cette valeur.}}
     </note_langues>

@@ -6,8 +6,42 @@ import json
 
 load_dotenv()
 
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
 
 def call_deepseek_api(prompt: str):
+    url = "https://api.fireworks.ai/inference/v1/chat/completions"
+    payload = {
+    "model": "accounts/fireworks/models/deepseek-v3",
+    "max_tokens": 16384,
+    "top_p": 1,
+    "top_k": 40,
+    "presence_penalty": 0,
+    "frequency_penalty": 0,
+    "temperature": 0.6,
+    "messages": [
+        {
+        "role": "user",
+        "content": prompt
+        }
+    ]
+    }
+    headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Authorization": "Bearer ***********"
+    }
+    response = requests.request("POST", url, headers=headers, data=json.dumps(payload))
+
+    if response.status_code == 200:
+        return response.json()["choices"][0]["message"]["content"]
+        
+    else:
+        # Handle the case where the API call was not successful
+        raise Exception(f"API call failed with status code {response.status_code}: {response.text}")
+
+
+
+""" def call_deepseek_api(prompt: str):
     url = "http://localhost:11434/api/generate"
     headers = {
         "Content-Type": "application/json"
@@ -42,7 +76,7 @@ def call_deepseek_api(prompt: str):
     
     else:
         # Handle the case where the API call was not successful
-        raise Exception(f"API call failed with status code {response.status_code}: {response.text}")
+        raise Exception(f"API call failed with status code {response.status_code}: {response.text}") """
 
 
 # def call_deepseek_api(prompt: str):
