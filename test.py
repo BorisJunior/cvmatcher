@@ -2,62 +2,176 @@ from services.processing_service import background_processing, redis_client
 import json
 from pprint import pprint
 import re
-
-def parse_to_json(output):
-    """
-    Convertit une sortie structurée (texte avec des sections `##`) en JSON.
-    """
-    # Regex pour identifier les sections avec le préfixe '##'
-    section_pattern = r"(?:## |\*\*)(.*?)(?:\n|\*\*\n)"
-
-    # Trouver toutes les sections
-    sections = re.findall(section_pattern, output)
-
-    # Découper la sortie en lignes pour un traitement plus facile
-    lines = output.splitlines()
-
-    # Dictionnaire pour stocker les données structurées
-    output_json = {}
-
-    current_section = None
-
-    for line in lines:
-        # Si la ligne correspond à un titre de section
-        if line.startswith("## "):
-            current_section = line[3:].strip()
-            output_json[current_section] = ""
-        elif line.startswith("##"):
-            current_section = line[2:].strip()
-            output_json[current_section] = ""
-        elif line.startswith("**"):
-            current_section = line[2:-2].strip()
-            output_json[current_section] = ""
-        # Sinon, ajouter le contenu à la section actuelle
-        elif current_section:
-            output_json[current_section] += line.strip("*+\t") + "\n"
-
-    # Nettoyage des espaces supplémentaires dans le contenu des sections
-    for section in output_json:
-        output_json[section] = output_json[section].strip()
+from services.deepseek_service import call_deepseek_api
 
 
-    json_info = {}
-    if section == "Json_info":
-        try:
-            json_info = json.loads(output_json[section])
-        except:
-            pass
+prompt = """
+Voici une fiche de poste brute :
 
-    return output_json, json_info
+Machine Learning Engineer
+EMEA · 1 day ago
+Dismiss job tip
+We highlight job details that match your preferences and skills. Click below to view and edit them.
 
-# cv = json.loads(redis_client.get("cv_json_global"))
-# jd = json.loads(redis_client.get("jd_json_global"))
+Remote
+Part-time
+No longer accepting applications
+About the job
+This position is on behalf of one of our client companies, not a direct role with Imploy
+
+We are seeking a talented Machine Learning Engineer to join our innovative team. In this remote role, you will play a crucial role in developing and deploying cutting-edge machine learning models to solve complex business problems. You will work closely with data scientists, software engineers, and product managers to bring innovative solutions to market.
+
+Key Responsibilities:
+
+Design, develop, and deploy machine learning models to solve real-world problems.
+Collaborate with data scientists to explore and understand large datasets.
+Implement and optimize machine learning algorithms and pipelines.
+Experiment with different machine learning techniques and frameworks.
+Work with software engineers to integrate machine learning models into production systems.
+Monitor and maintain machine learning models in production.
+Stay up-to-date with the latest advancements in machine learning and artificial intelligence.
+Qualifications and Experience:
+
+Master's degree or PhD in Computer Science, Statistics, or a related field.
+Strong programming skills in Python and experience with machine learning frameworks (TensorFlow, PyTorch, Scikit-learn).
+Experience with data preprocessing, feature engineering, and model evaluation.
+Knowledge of cloud platforms (AWS, GCP, Azure) and their machine learning services.
+Strong problem-solving and analytical skills.
+Excellent communication and collaboration skills.
+Experience with deploying machine learning models to production.
+What We Offer:
+
+Competitive compensation package.
+Flexible remote work arrangements.
+Opportunities for professional development and career growth.
+A collaborative and innovative work environment.
+If you are a passionate and skilled machine learning engineer, we encourage you to apply.
+
+**Tâche** :
+Structure cette fiche de poste en suivant impérativement le format suivant et les délimiteurs. Utilise `##` pour délimiter les sections principales. Extrait pour chaque section toutes les informations disponibles dans la fiche de poste. Si une information n’est pas disponible, mentionne "Non mentionné". Respecte la structure suivante :
+
+## Titre_Poste
+{{Titre exact du poste}}
+
+## Domaine
+{{Indiquer le domaine ou la spécialisation}}
+
+## Missions
+{{Lister les missions et responsabilités en détail.}}
+
+## Hard_Skills
+{{Lister les compétences techniques requises ou valorisées, comme les outils, langages de programmation, frameworks.}}
+
+## Soft_Skills
+{{Lister les qualités ou compétences transversales mentionnées, comme leadership, communication.}}
+
+## Langues
+{{Lister les langues demandées et leur niveau, si mentionné.}}
+
+## Formation
+{{Indiquer le niveau d'études minimum requis}}
+{{Indiquer le domaine ou filière d'études}}
+{{Indiquer les établissements reconnus. Si ce n'est pas indiqué, mettre "non exigé"}}
+
+## Xp_Professionnelles
+{{Indiquer le nombre d'années d'expérience requis, les types de postes ou secteurs d'activité valorisés.}}
+
+## Projets
+{{Lister des projets types ou réalisations exemplaires mentionnées.}}
+
+## Certifications
+{{Lister les certifications ou licences exigées ou valorisées.}}
+
+## Autres
+{{Autres informations}}
+
+Fournis la fiche de poste structurée dans ce format.
+
+*Réponse*:
+
+"""
+
+structured_jd = call_deepseek_api(prompt)
+print('jd response done', structured_jd)
+
+
+
+
+
+
+# def parse_to_json(output):
+#     """
+#     Convertit une sortie structurée (texte avec des sections `##`) en JSON.
+#     """
+#     # Regex pour identifier les sections avec le préfixe '##'
+#     section_pattern = r"(?:## |\*\*)(.*?)(?:\n|\*\*\n)"
+
+#     # Trouver toutes les sections
+#     sections = re.findall(section_pattern, output)
+
+#     # Découper la sortie en lignes pour un traitement plus facile
+#     lines = output.splitlines()
+
+#     # Dictionnaire pour stocker les données structurées
+#     output_json = {}
+
+#     current_section = None
+
+#     for line in lines:
+#         # Si la ligne correspond à un titre de section
+#         if line.startswith("## "):
+#             current_section = line[3:].strip()
+#             output_json[current_section] = ""
+#         elif line.startswith("##"):
+#             current_section = line[2:].strip()
+#             output_json[current_section] = ""
+#         elif line.startswith("**"):
+#             current_section = line[2:-2].strip()
+#             output_json[current_section] = ""
+#         # Sinon, ajouter le contenu à la section actuelle
+#         elif current_section:
+#             output_json[current_section] += line.strip("*+- \t") + "\n"
+
+#     # Nettoyage des espaces supplémentaires dans le contenu des sections
+#     for section in output_json:
+#         output_json[section] = output_json[section].strip()
+
+
+#     json_info = {}
+#     if section == "Json_info":
+#         try:
+#             json_info = json.loads(output_json[section])
+#         except:
+#             pass
+
+#     return output_json, json_info
+
+# # cv = json.loads(redis_client.get("cv_json_global"))
+# # jd = json.loads(redis_client.get("jd_json_global"))
 # raw_cv = json.loads(redis_client.get("structured_cv"))
 # raw_jd = json.loads(redis_client.get("structured_jd"))
-# scores = json.loads(redis_client.get("scores_global"))
+# # scores = json.loads(redis_client.get("scores_global"))
 
-user_info = json.loads(redis_client.get("user_info"))
-pprint(user_info)
+# # user_info = json.loads(redis_client.get("user_info"))
+# # pprint(raw_cv)
+
+# def split_to_sections(input):
+#     # Regex pour identifier les sections avec le préfixe '##'
+#     section_pattern = r"(?:## |\*\*)(.*?)(?:\n|\*\*\n)"
+
+#     # Trouver toutes les sections
+#     sections = re.findall(section_pattern, input)
+
+#     # Découper la sortie en lignes pour un traitement plus facile
+#     lines = input.splitlines()
+
+#     # Dictionnaire pour stocker les données structurées
+#     output = []
+
+#     print(lines, sections)
+
+# output, _ =  parse_to_json(raw_jd)
+# print(output)
 
 
 # pprint(raw_cv)
@@ -67,7 +181,7 @@ pprint(user_info)
 # _, json_info = parse_to_json(raw_cv)
 # pprint(json_info)
 # parse_to_json(raw_cv)
-#pprint(scores)
+# pprint(scores)
 
 
 

@@ -41,7 +41,7 @@ Structure ce CV en suivant impérativement le format suivant et les délimiteurs
 {{Autres informations}}
 
 
-##Json_info
+## Json_info
 {{Ajoute à la fin sous format JSON les informatons personnelles du candidat avec les clés name, cv_title, number, email, location etc...
 }}
 

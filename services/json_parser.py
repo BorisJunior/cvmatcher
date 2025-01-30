@@ -35,7 +35,7 @@ def parse_to_json(output):
             output_json[current_section] = ""
         # Sinon, ajouter le contenu à la section actuelle
         elif current_section:
-            output_json[current_section] += line.strip("*+\t") + "\n"
+            output_json[current_section] += line.strip("*+- \t") + "\n"
 
     # Nettoyage des espaces supplémentaires dans le contenu des sections
     for section in output_json:

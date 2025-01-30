@@ -14,6 +14,7 @@ from services.scoring_prompts import *
 from services.llama_vision_service import generate_vision_response
 from redis import Redis
 import json
+import concurrent.futures
 
 redis_client = Redis(host="localhost", port=6379, db=0, decode_responses=True)
 
@@ -91,7 +92,8 @@ def calculate_scores(cv_json, jd_json):
         """
         if section == "Formation":
             prompt = generate_formation_prompt(cv_json.get("Formation", "Non mentionné"),
-                                               jd_json.get("Formation", "Non mentionné"))
+                                               jd_json.get("Formation", "Non mentionné"),
+                                               cv_json.get("Certifications", "Non mentionné"))
         elif section == "Xp_Professionnelles":
             prompt = generate_experience_prompt(cv_json.get("Xp_Professionnelles", "Non mentionné"),
                                                 jd_json.get("Xp_Professionnelles", "Non mentionné"))
@@ -122,14 +124,38 @@ def calculate_scores(cv_json, jd_json):
                 result.get(f"{section.lower()}_explication", "Non disponible")
             ) """
     
-    print('sections', sections)
-    for section in sections:
+    def process_section(section):
         section, result = calculate_section_score(section)
-        scores[f"note_{section.lower()}"] = result.get(f"note_{section.lower()}", "Non disponible")
-        scores[f"{section.lower()}_explication"] = format_explanation(
-            result.get(f"{section.lower()}_explication", "Non disponible"))
-        print(f"{section.lower()} score", scores[f"note_{section.lower()}"])
-    return scores
+        score_key = f"note_{section.lower()}"
+        explanation_key = f"{section.lower()}_explication"
+        # note_explanation_key = "note_explication"
+        
+        score = result.get(score_key, "Non disponible")
+        explanation = format_explanation(result.get(explanation_key, "Non disponible"))
+        
+        print(f"{section.lower()} score", score)
+        
+        return {score_key: score, explanation_key: explanation}
+    
+    def process_sections(sections):
+        scores = {}
+        
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            # Submit tasks to the executor
+            future_to_section = {executor.submit(process_section, section): section for section in sections}
+            
+            # Collect results as they complete
+            for future in concurrent.futures.as_completed(future_to_section):
+                section = future_to_section[future]
+                try:
+                    result = future.result()
+                    scores.update(result)
+                except Exception as e:
+                    print(f"Error processing section {section}: {e}")
+        
+        return scores
+    
+    return process_sections(sections)
 
 def clean_numeric_values(values):
     cleaned_values = []
