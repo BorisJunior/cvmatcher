@@ -7,18 +7,22 @@ import time
 
 import io
 import uuid
-import fitz  # PyMuPDF
+# import fitz  # PyMuPDF
 from PIL import Image
 
 # Import des services
 from services.scoring_prompts import *
 from services.global_state import progress_status, cv_json_global, jd_json_global, scores_global
-from services.processing_service import background_processing
+from services.processing_service import background_processing, redis_client, save_progress
+import json
 
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'
+
 app.config['UPLOAD_FOLDER'] = './uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
+
 
 
 
@@ -42,16 +46,17 @@ def index():
 
         # Réinitialisation du statut de progression
         progress_status = {"progress": 0, "message": "Initialisation..."}
+        save_progress(progress_status)
 
         # Lancer le traitement en arrière-plan
-        """thread = Thread(target=background_processing, args=(filepath, job_description))
+        thread = Thread(target=background_processing, args=(filepath, job_description))
         thread.start()
         
 
         # Redirection vers la page de chargement
-        return redirect(url_for('loading'))"""
+        return redirect(url_for('loading'))
 
-        background_processing(filepath, job_description)
+        # background_processing(filepath, job_description)
         
         return redirect(url_for('result'))
 
@@ -70,14 +75,22 @@ def progress():
     """
     Endpoint pour renvoyer l'état d'avancement en JSON.
     """
-    return jsonify(progress_status)
+    progress = json.loads(redis_client.get("progress"))
+    return progress
 
 @app.route("/result")
 def result():
     """
     Page des résultats, affichant les données traitées.
-    """
-    return render_template("result.html", cv_json=cv_json_global, jd_json=jd_json_global, scores=scores_global)
+    """ 
+    cv = json.loads(redis_client.get("cv_json_global"))
+    jd = json.loads(redis_client.get("jd_json_global"))
+    user_info = json.loads(redis_client.get("user_info"))
+    scores = json.loads(redis_client.get("scores_global"))
+    note_globale = float(redis_client.get('note_generale'))
+    note_globale = round(note_globale, 2)
+    
+    return render_template("result.html", cv_json=cv, jd_json=jd, scores=scores, note_globale=note_globale, user=user_info)
 
 if __name__ == "__main__":
     app.run(debug=True)

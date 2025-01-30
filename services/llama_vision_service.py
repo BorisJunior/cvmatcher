@@ -1,5 +1,7 @@
 from together import Together
 import base64
+from dotenv import load_dotenv
+import os
 
 def encode_image(image_path: str) -> str:
     """Encode une image en base64"""
@@ -13,7 +15,7 @@ def generate_vision_response(prompt: str, image_path: str) -> str:
     - Streamming des résultats
     - Gestion du format de réponse
     """
-    client = Together(api_key='**************************')
+    client = Together(api_key=os.getenv("DEEPSEEK_API_KEY"))
     
     # Préparation du payload
     messages = [{

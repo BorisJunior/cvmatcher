@@ -44,34 +44,39 @@
                 <!-- Nom, rôle -->
                 <div class="candidate-main-info">
                     
-                    <h2 class="candidate-name">KOULEVO Boris</h2> <!-- TO DO : A Dynamiser -->
+                    <h2 class="candidate-name"> {{ user.get('name', 'Non disponible') }} </h2> <!-- TO DO : A Dynamiser -->
                     <div class="candidate-role">
-                        <span>{{ cv_json.get('Titre_CV', 'Non disponible') }}</span>
+                        <span>{{ user.get('cv_title', 'Non disponible') }}</span>
                     </div>
                 </div>
     
                 <!-- Score -->
-                <div class="score-badge">9/10</div><!-- Mettre score global -->
+                <div class="score-badge"> {{ note_globale }}/10</div><!-- Mettre score global -->
             </div>
     
             <!-- Expérience / Éducation -->
             <div class="candidate-details">
                 <div class="candidate-experience">
-                    <span class="detail-icon">💼</span>
-                    <span class="detail-text">Développeur Python, Société X…</span> <!-- TO DO : A Dynamiser -->
+                    <span class="detail-icon">☎️</span>
+                    <span class="detail-text">{{ user.get('number', 'Non disponible') }}</span> <!-- TO DO : A Dynamiser -->
                 </div>
                 <div class="candidate-education">
-                    <span class="detail-icon">🎓</span>
-                    <span class="detail-text">Université de Technologie de Belfort Montbéliard</span> <!-- TO DO : A Dynamiser -->
+                    <span class="detail-icon">📧</span>
+                    <span class="detail-text">{{ user.get('email', 'Non disponible') }}</span> <!-- TO DO : A Dynamiser -->
+                </div>
+                <div class="candidate-education">
+                    <span class="detail-icon">🏠</span>
+                    <span class="detail-text">{{ user.get('location', 'Non disponible') }}</span> <!-- TO DO : A Dynamiser -->
                 </div>
             </div>
     
             <!-- Compétences -->
-            <div class="skills-tags"> <!-- TO DO : A Dynamiser -->
+              <!-- TO DO : A Dynamiser -->
+            <!-- <div class="skills-tags">                
                 <span class="skill-tag">Python</span>
                 <span class="skill-tag">Machine Learning</span>
                 <span class="skill-tag">Deep Learning</span>
-            </div>
+            </div> -->
     
             <!-- Lien de détails -->
             <div class="candidate-footer">

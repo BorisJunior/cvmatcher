@@ -12,6 +12,12 @@ from services.response_parser import parse_llm_response
 from services.text_formatter import format_explanation
 from services.scoring_prompts import *
 from services.llama_vision_service import generate_vision_response
+from redis import Redis
+import json
+
+redis_client = Redis(host="localhost", port=6379, db=0, decode_responses=True)
+
+save_progress = lambda progress : redis_client.set("progress", json.dumps(progress))
 
 # ----------------------------------------------------------
 # Helper Functions
@@ -57,6 +63,8 @@ def structure_cv_and_jd(image_path, job_description):
     print('start vision response')
     structured_cv = generate_vision_response(cv_prompt, image_path)
     print('vision response done')
+    progress_status = {"progress": 34, "message": "🛠️ Extraction & structuration du CV et de la JD..."}
+    save_progress(progress_status)
     structured_jd = call_deepseek_api(jd_prompt)
     print('jd response done')
     """  
@@ -123,6 +131,20 @@ def calculate_scores(cv_json, jd_json):
         print(f"{section.lower()} score", scores[f"note_{section.lower()}"])
     return scores
 
+def clean_numeric_values(values):
+    cleaned_values = []
+    for value in values:
+        # If the value is a string and contains a '/'
+        if isinstance(value, str) and '/' in value:
+            # Split the string by '/' and take the numerator (first part)
+            numerator = value.split('/')[0]
+            # Convert the numerator to a float or int
+            cleaned_values.append(float(numerator) if '.' in numerator else int(numerator))
+        else:
+            # If the value is already numeric, add it directly
+            cleaned_values.append(float(value) if isinstance(value, str) and '.' in value else int(value))
+    return cleaned_values
+
 def background_processing(filepath, job_description):
     """
     Fonction exécutant le traitement en arrière-plan.
@@ -134,7 +156,8 @@ def background_processing(filepath, job_description):
 
     try:
         progress_status = {"progress": 0, "message": "🔍 Vérification du fichier CV..."}
-        time.sleep(1)  # Simule un léger délai
+        save_progress(progress_status)
+        
 
         
         # Étape 1 : Vérifier l'extension. Si PDF, conversion en image
@@ -146,25 +169,41 @@ def background_processing(filepath, job_description):
             image_path = filepath
 
         print('file path', image_path)
-        # Étape 2 : Structurer le CV via LLaMA Vision + JD via DeepSeek
-        progress_status = {"progress": 33, "message": "🛠️ Extraction & structuration du CV et de la JD..."}
-        time.sleep(1)
-
+        # Étape 2 : Structurer le CV via LLaMA Vision + JD via DeepSeek    
         structured_cv, structured_jd = structure_cv_and_jd(image_path, job_description)
+        
 
         print('structured_cv', structured_cv)
         print('structured_jd', structured_jd)   
-        cv_json_global = parse_to_json(structured_cv)
-        jd_json_global = parse_to_json(structured_jd)
+        redis_client.set('structured_cv', json.dumps(structured_cv))
+        redis_client.set('structured_jd', json.dumps(structured_jd))
+        cv_json_global, user_info = parse_to_json(structured_cv)
+        jd_json_global, _ = parse_to_json(structured_jd)
 
         # Étape 3 : Calcul des scores
-        progress_status = {"progress": 66, "message": "🤖 Calcul du score avec notre Super IA..."}
-        time.sleep(1)
+        progress_status = {"progress": 67, "message": "🤖 Calcul du score avec notre Super IA..."}
+        save_progress(progress_status)
+        
 
 
         scores_global = calculate_scores(cv_json_global, jd_json_global)
 
+        redis_client.set("cv_json_global", json.dumps(cv_json_global))
+        redis_client.set("jd_json_global", json.dumps(jd_json_global))
+        redis_client.set("scores_global", json.dumps(scores_global))
+        redis_client.set("user_info", json.dumps(user_info))
+
         print('scores_global', scores_global)
+
+        scores_notes = [scores_global['note_formation'], scores_global['note_hard_skills'], scores_global['note_langues'], scores_global['note_soft_skills'], scores_global['note_xp_professionnelles']]
+        cleaned_scores_notes = clean_numeric_values(scores_notes)
+        note_generale = sum(cleaned_scores_notes) / 5
+        redis_client.set("note_generale", note_generale)
+
+        print("note_generale", note_generale)
+
         progress_status = {"progress": 100, "message": "✅ Traitement terminé. Préparation de la page des résultats..."}
+        save_progress(progress_status)
     except Exception as e:
         progress_status = {"progress": 0, "message": f"❌ Erreur : {e}"}
+        save_progress(progress_status)
