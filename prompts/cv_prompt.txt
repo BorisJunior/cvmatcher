@@ -42,7 +42,7 @@ Structure ce CV en suivant impérativement le format suivant et les délimiteurs
 
 
 ## Json_info
-{{Ajoute à la fin sous format JSON les informatons personnelles du candidat avec les clés name, cv_title, number, email, location etc...
+{{Ajoute à la fin sous format JSON les informatons personnelles  du candidat (le nom complet, son titre, le numéro, l'émail, la location, l'université du dernier diplôme les 5 premieres compétences techniques) avec les clés name, cv_title, number, email, location, university, hard_skill1, hard_skill2,  hard_skill3, hard_skill4, hard_skill5 ...
 }}
 
 Fournis le CV structuré dans ce format.

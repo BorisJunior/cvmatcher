@@ -28,7 +28,7 @@ def call_deepseek_api(prompt: str):
     headers = {
     "Accept": "application/json",
     "Content-Type": "application/json",
-    "Authorization": "Bearer ***********"
+    "Authorization": "Bearer fw_3ZZhibhjM2hD1D3B7LysTD4R"
     }
     response = requests.request("POST", url, headers=headers, data=json.dumps(payload))
 

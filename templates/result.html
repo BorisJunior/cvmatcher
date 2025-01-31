@@ -65,18 +65,20 @@
                     <span class="detail-text">{{ user.get('email', 'Non disponible') }}</span> <!-- TO DO : A Dynamiser -->
                 </div>
                 <div class="candidate-education">
-                    <span class="detail-icon">🏠</span>
-                    <span class="detail-text">{{ user.get('location', 'Non disponible') }}</span> <!-- TO DO : A Dynamiser -->
+                    <span class="detail-icon">🎓</span>
+                    <span class="detail-text">{{ user.get('university', 'Non disponible') }}</span> <!-- TO DO : A Dynamiser -->
                 </div>
             </div>
     
             <!-- Compétences -->
               <!-- TO DO : A Dynamiser -->
-            <!-- <div class="skills-tags">                
-                <span class="skill-tag">Python</span>
-                <span class="skill-tag">Machine Learning</span>
-                <span class="skill-tag">Deep Learning</span>
-            </div> -->
+            <div class="skills-tags">                
+                <span class="skill-tag">{{ user.get('hard_skill1', 'Non disponible') }}</span>
+                <span class="skill-tag">{{ user.get('hard_skill2', 'Non disponible') }}</span>
+                <span class="skill-tag">{{ user.get('hard_skill3', 'Non disponible') }}</span>
+                <span class="skill-tag">{{ user.get('hard_skill4', 'Non disponible') }}</span>
+                <span class="skill-tag">{{ user.get('hard_skill5', 'Non disponible') }}</span>
+            </div> 
     
             <!-- Lien de détails -->
             <div class="candidate-footer">
@@ -85,13 +87,15 @@
         </div>
       </div>
 
+      
+
       <!-- Modal des détails -->
       <div class="modal" id="detailsModal">
           <div class="modal-content">
               <div class="modal-header">
                   <div>
                     <h2>Détails du matching 🎯</h2>
-                     <p>{{ user.get('name', 'Non disponible') }} 👨🏽‍💻</p> <!-- TO DO : A Dynamiser -->
+                     <p>{{ user.get('name', 'Non disponible') }} - {{ user.get('cv_title', 'Non disponible') }}</p> <!-- TO DO : A Dynamiser -->
                   </div>
                   <button class="close-btn" onclick="closeModal()">×</button>
               </div>

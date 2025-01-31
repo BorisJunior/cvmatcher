@@ -298,7 +298,7 @@ def generate_soft_skills_prompt(cv_soft_skills, jd_soft_skills, cv_experiences):
 
     ### Règles d’évaluation :
     1. Vérifier si la soft skill est mentionnée ou déduite (7 ou 4 ou 0 points) :
-       - 7 points : la compétence comportementale est explicitement mentionnée (ex. “Excellente communication”).
+       - 7 points : la compétence comportementale est explicitement mentionnée.
        - 4 points : la compétence n'est pas explicitement mentionnée, mais peut être déduite 
                     d’autres éléments du CV (ex. postes/managers indiquant du leadership).
        - 0 point : la compétence n'est ni mentionnée ni déduite.
@@ -388,7 +388,7 @@ def generate_languages_prompt(cv_langues, jd_langues):
 
     ### Règles d’évaluation :
     1. Niveau mentionné (7 ou 5 ou 4 ou 0 points) :
-       - 7 points : la langue est mentionnée avec un niveau intermédiaire ou plus (B2, C1, C2, "Fluent", etc.).
+       - 7 points : la langue est mentionnée avec un niveau courant ou intermédiaire ou plus (B2, C1, C2, "Fluent", etc.).
        - 5 points : Aucun niveau n'est mentionné.
        - 4 points : la langue est mentionnée avec un niveau inférieur à intermédiaire (A1, A2, "Débutant", etc.).
        - 0 point : la langue n'est pas mentionnée du tout.

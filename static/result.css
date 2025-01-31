@@ -96,10 +96,11 @@ body {
 
 /* Grille des résultats */
 .results-grid {
-    display: grid;
+    display: flex;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
     margin-bottom: 2rem;
+    flex-wrap: wrap;
 }
 
 /* ========== NOUVEAU STYLE DU CARD CANDIDAT ========== */
