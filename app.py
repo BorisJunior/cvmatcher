@@ -87,9 +87,10 @@ def result():
     jd = json.loads(redis_client.get("jd_json_global"))
     user_info = json.loads(redis_client.get("user_info"))
     scores = json.loads(redis_client.get("scores_global"))
-    # note_globale = float(redis_client.get('note_generale'))
-    # note_globale = round(note_globale, 2)
-    note_globale = 10
+    keys = ['soft_skills', 'hard_skills', 'formation', 'xp_professionnelles']
+    note_globale = round(sum([float(scores[f'note_{key}']) for key in keys]) / 4, 2)
+
+
     
     return render_template("result.html", cv_json=cv, jd_json=jd, scores=scores, note_globale=note_globale, user=user_info)
 

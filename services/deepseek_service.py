@@ -1,4 +1,5 @@
 from together import Together
+from openai import OpenAI
 from dotenv import load_dotenv
 import os
 import requests
@@ -6,38 +7,49 @@ import json
 
 load_dotenv()
 
-DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
-
 def call_deepseek_api(prompt: str):
-    url = "https://api.fireworks.ai/inference/v1/chat/completions"
-    payload = {
-    "model": "accounts/fireworks/models/deepseek-v3",
-    "max_tokens": 16384,
-    "top_p": 1,
-    "top_k": 40,
-    "presence_penalty": 0,
-    "frequency_penalty": 0,
-    "temperature": 0.6,
-    "messages": [
-        {
-        "role": "user",
-        "content": prompt
-        }
-    ]
-    }
-    headers = {
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-    "Authorization": "Bearer *********"
-    }
-    response = requests.request("POST", url, headers=headers, data=json.dumps(payload))
+    client = OpenAI(api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com")
 
-    if response.status_code == 200:
-        return response.json()["choices"][0]["message"]["content"]
+    messages = [{"role": "user", "content": prompt}]
+    response = client.chat.completions.create(
+        model="deepseek-chat",
+        messages=messages
+    )
+
+    # reasoning_content = response.choices[0].message.reasoning_content
+    content = response.choices[0].message.content
+    return content
+
+# def call_deepseek_api(prompt: str):
+#     url = "https://api.fireworks.ai/inference/v1/chat/completions"
+#     payload = {
+#     "model": "accounts/fireworks/models/deepseek-v3",
+#     "max_tokens": 16384,
+#     "top_p": 1,
+#     "top_k": 40,
+#     "presence_penalty": 0,
+#     "frequency_penalty": 0,
+#     "temperature": 0.6,
+#     "messages": [
+#         {
+#         "role": "user",
+#         "content": prompt
+#         }
+#     ]
+#     }
+#     headers = {
+#     "Accept": "application/json",
+#     "Content-Type": "application/json",
+#     "Authorization": "Bearer *********"
+#     }
+#     response = requests.request("POST", url, headers=headers, data=json.dumps(payload))
+
+#     if response.status_code == 200:
+#         return response.json()["choices"][0]["message"]["content"]
         
-    else:
-        # Handle the case where the API call was not successful
-        raise Exception(f"API call failed with status code {response.status_code}: {response.text}")
+#     else:
+#         # Handle the case where the API call was not successful
+#         raise Exception(f"API call failed with status code {response.status_code}: {response.text}")
 
 
 
